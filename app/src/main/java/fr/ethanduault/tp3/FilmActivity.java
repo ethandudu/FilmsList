@@ -22,6 +22,10 @@ public class FilmActivity extends AppCompatActivity {
         filmList.put("starwars", "Film de science-fiction écris par George Lucas");
         filmList.put("lordofthering", "Film de fantasy écris par J.R.R. Tolkien");
 
+        Hashtable<String, String> CoverList = new Hashtable<String, String>();
+        CoverList.put("starwars", "starwars");
+        CoverList.put("lordofthering", "lordofthering");
+
         Intent i;
         i = getIntent();
         String filmName = i.getStringExtra("filmName");
@@ -37,6 +41,11 @@ public class FilmActivity extends AppCompatActivity {
         filmdescTextView.setText(filmList.get(filmName));
 
         ImageView filmImageView = (ImageView) findViewById(R.id.filmImageView);
-        filmImageView.setImageResource(getResources().getIdentifier(filmName, "drawable", getPackageName()));
+        //check if the image exists in the hashtable
+        if (CoverList.get(filmName) == null) {
+            filmImageView.setImageResource(getResources().getIdentifier("notfound", "drawable", getPackageName()));
+        } else {
+            filmImageView.setImageResource(getResources().getIdentifier(CoverList.get(filmName), "drawable", getPackageName()));
+        }
     }
 }
